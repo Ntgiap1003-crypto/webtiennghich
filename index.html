@@ -19,7 +19,28 @@
         </div>
     </div>
 
-    <header class="hero" style="background-image: url('hero.png');">
+    <!-- Sidebar Navigation -->
+    <aside class="wiki-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Mục Lục</h2>
+            <button class="close-sidebar" id="close-sidebar">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="#home">Trang chủ</a></li>
+            <li><a href="#about">Giới thiệu</a></li>
+            <li><a href="#characters">Nhân vật chính</a></li>
+            <li><a href="#scenes">Phân cảnh hay</a></li>
+            <li><a href="#cultivation">Cảnh giới</a></li>
+            
+            <!-- Thêm mục wiki ảo -->
+            <li class="sidebar-category">Bách Khoa Toàn Thư</li>
+            <li><a href="#">Pháp Bảo (Sắp ra mắt)</a></li>
+            <li><a href="#">Đan Dược (Sắp ra mắt)</a></li>
+            <li><a href="#">Thế Lực (Sắp ra mắt)</a></li>
+        </ul>
+    </aside>
+
+    <header class="hero" id="home" style="background-image: url('hero.png');">
         <!-- Video Background -->
         <video autoplay muted loop id="bg-video" playsinline></video>
         <label for="video-upload" class="upload-btn" style="top: auto; bottom: 20px; right: 20px; z-index: 100;">Đổi Video Nền</label>
@@ -36,13 +57,6 @@
                 <span class="bar"></span>
                 <span class="bar"></span>
             </div>
-            <ul class="nav-links">
-                <li><a href="#home">Trang chủ</a></li>
-                <li><a href="#about">Giới thiệu</a></li>
-                <li><a href="#characters">Nhân vật</a></li>
-                <li><a href="#scenes">Phân cảnh hay</a></li>
-                <li><a href="#cultivation">Cảnh giới</a></li>
-            </ul>
         </nav>
         <div class="hero-content">
             <h1 class="title">TIÊN NGHỊCH</h1>

@@ -206,22 +206,28 @@ document.addEventListener('DOMContentLoaded', () => {
     setupImageUpload('scene2-upload', 'scene2-img', 'scene2-placeholder', 'scene2_custom_image');
     setupImageUpload('scene3-upload', 'scene3-img', 'scene3-placeholder', 'scene3_custom_image');
 
-    // Hamburger Menu Logic
+    // Hamburger / Sidebar Menu Logic
     const hamburger = document.querySelector('.hamburger');
-    const navLinksList = document.querySelector('.nav-links');
-    const navLinksItems = document.querySelectorAll('.nav-links a');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('close-sidebar');
+    const sidebarLinksItems = document.querySelectorAll('.sidebar-links a');
 
-    if (hamburger && navLinksList) {
+    if (hamburger && sidebar && closeSidebar) {
         hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinksList.classList.toggle('active');
+            hamburger.classList.add('active');
+            sidebar.classList.add('active');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('active');
         });
 
         // Close menu when clicking a link
-        navLinksItems.forEach(item => {
+        sidebarLinksItems.forEach(item => {
             item.addEventListener('click', () => {
                 hamburger.classList.remove('active');
-                navLinksList.classList.remove('active');
+                sidebar.classList.remove('active');
             });
         });
     }
