@@ -20,6 +20,14 @@
     </div>
 
     <header class="hero" style="background-image: url('hero.png');">
+        <!-- Video Background -->
+        <video autoplay muted loop id="bg-video" playsinline></video>
+        <label for="video-upload" class="upload-btn" style="top: auto; bottom: 20px; right: 20px; z-index: 100;">Đổi Video Nền</label>
+        <input type="file" id="video-upload" accept="video/*" style="display: none;">
+        
+        <!-- Master Canvas for Stars, Smoke, Light Rain, and Particles -->
+        <canvas id="master-canvas"></canvas>
+
         <div class="overlay"></div>
         <nav>
             <div class="logo">Tiên Nghịch</div>

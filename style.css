@@ -112,6 +112,28 @@ body.no-scroll {
     overflow: hidden;
 }
 
+#bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    transform: translateX(-50%) translateY(-50%);
+    object-fit: cover;
+    opacity: 0.5;
+}
+
+#master-canvas {
+    position: absolute;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
 .overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;

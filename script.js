@@ -225,4 +225,122 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // Video Background Upload Logic
+    const videoUpload = document.getElementById('video-upload');
+    const bgVideo = document.getElementById('bg-video');
+    if (videoUpload && bgVideo) {
+        videoUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+                bgVideo.src = fileURL;
+            }
+        });
+    }
+
+    // Master Canvas Effects (Stars, Smoke, Light Rain, Canvas Particles)
+    const canvas = document.getElementById('master-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = document.querySelector('.hero').offsetHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = document.querySelector('.hero').offsetHeight;
+        });
+
+        const stars = [];
+        const smoke = [];
+        const rain = [];
+        const particles = [];
+
+        // Init Stars
+        for (let i=0; i<150; i++) {
+            stars.push({ x: Math.random() * width, y: Math.random() * height, radius: Math.random() * 1.5, vy: Math.random() * 0.5 + 0.1 });
+        }
+
+        // Init Smoke
+        for (let i=0; i<6; i++) {
+            smoke.push({
+                x: Math.random() * width, y: Math.random() * height,
+                radius: Math.random() * 200 + 100,
+                vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+                alpha: Math.random() * 0.05 + 0.02
+            });
+        }
+
+        // Init Light Rain
+        for (let i=0; i<25; i++) {
+            rain.push({
+                x: Math.random() * width, y: Math.random() * height,
+                length: Math.random() * 60 + 40,
+                vy: Math.random() * 15 + 15,
+                alpha: Math.random() * 0.4 + 0.1
+            });
+        }
+
+        // Init Canvas Particles
+        for (let i=0; i<50; i++) {
+            particles.push({
+                x: Math.random() * width, y: Math.random() * height,
+                radius: Math.random() * 3 + 1,
+                vx: (Math.random() - 0.5) * 1, vy: Math.random() * -2 - 0.5,
+                alpha: Math.random() * 0.8 + 0.2
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw Stars
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            stars.forEach(s => {
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2); ctx.fill();
+                s.y += s.vy;
+                if (s.y > height) { s.y = 0; s.x = Math.random() * width; }
+            });
+
+            // Draw Smoke
+            smoke.forEach(s => {
+                const gradient = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.radius);
+                gradient.addColorStop(0, `rgba(102, 252, 241, ${s.alpha})`);
+                gradient.addColorStop(1, `rgba(102, 252, 241, 0)`);
+                ctx.fillStyle = gradient;
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2); ctx.fill();
+                s.x += s.vx; s.y += s.vy;
+                if (s.x < -s.radius) s.x = width + s.radius;
+                if (s.x > width + s.radius) s.x = -s.radius;
+                if (s.y < -s.radius) s.y = height + s.radius;
+                if (s.y > height + s.radius) s.y = -s.radius;
+            });
+
+            // Draw Light Rain
+            ctx.lineWidth = 1.5;
+            rain.forEach(r => {
+                const rainGradient = ctx.createLinearGradient(r.x, r.y, r.x, r.y + r.length);
+                rainGradient.addColorStop(0, `rgba(255, 255, 255, 0)`);
+                rainGradient.addColorStop(1, `rgba(255, 255, 255, ${r.alpha})`);
+                ctx.strokeStyle = rainGradient;
+                ctx.beginPath(); ctx.moveTo(r.x, r.y); ctx.lineTo(r.x, r.y + r.length); ctx.stroke();
+                r.y += r.vy;
+                if (r.y > height) { r.y = -r.length; r.x = Math.random() * width; }
+            });
+
+            // Draw Particles
+            particles.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(102, 252, 241, ${p.alpha})`;
+                ctx.shadowBlur = 15; ctx.shadowColor = '#66fcf1';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                p.x += p.vx; p.y += p.vy;
+                if (p.y < -10) { p.y = height + 10; p.x = Math.random() * width; }
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+    }
 });
