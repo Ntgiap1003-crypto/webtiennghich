@@ -1,4 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Preloader Logic
+    const preloader = document.getElementById('preloader');
+    const loadingBar = document.querySelector('.loading-bar');
+    
+    if (preloader && loadingBar) {
+        document.body.classList.add('no-scroll');
+        let progress = 0;
+        
+        const interval = setInterval(() => {
+            progress += Math.random() * 15 + 5; // increment randomly between 5 and 20
+            
+            if (progress >= 100) {
+                progress = 100;
+                loadingBar.style.width = progress + '%';
+                clearInterval(interval);
+                
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        document.body.classList.remove('no-scroll');
+                    }, 500); // fade out time
+                }, 400); // short delay at 100%
+            } else {
+                loadingBar.style.width = progress + '%';
+            }
+        }, 150); // every 150ms
+    }
+
     // Reveal animations using Intersection Observer
     const animatedElements = document.querySelectorAll('.section-title, .char-card, .scene-card, .timeline-item, .about-card');
     
