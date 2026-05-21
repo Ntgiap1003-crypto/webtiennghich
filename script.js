@@ -1,27 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Reveal animations
-    const sections = document.querySelectorAll('section');
+    // Reveal animations using Intersection Observer
+    const animatedElements = document.querySelectorAll('.section-title, .char-card, .scene-card, .timeline-item, .about-card');
     
-    const revealSection = () => {
-        sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
-            
-            if (sectionTop < windowHeight * 0.8) {
-                section.style.opacity = '1';
-                section.style.transform = 'translateY(0)';
-            }
-        });
-    };
-
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'all 0.8s ease-out';
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.8s ease-out';
     });
 
-    window.addEventListener('scroll', revealSection);
-    revealSection(); // Trigger on load
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0) scale(1)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    });
+
+    animatedElements.forEach(el => observer.observe(el));
+    
+    // Glowing Particles in Hero
+    const createParticles = () => {
+        const hero = document.querySelector('.hero');
+        if (!hero) return;
+        
+        const particlesContainer = document.createElement('div');
+        particlesContainer.className = 'particles-container';
+        hero.appendChild(particlesContainer);
+        
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = Math.random() * 5 + 2;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 10 + 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+                
+                // Remove particle after animation to prevent DOM bloat, though infinite animation means we can keep them.
+                // We're just appending them once with infinite loop.
+            }, i * 300);
+        }
+    };
+    
+    createParticles();
     
     // Navbar scroll effect
     const nav = document.querySelector('nav');
