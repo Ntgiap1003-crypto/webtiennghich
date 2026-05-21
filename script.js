@@ -176,4 +176,24 @@ document.addEventListener('DOMContentLoaded', () => {
     setupImageUpload('scene1-upload', 'scene1-img', 'scene1-placeholder', 'scene1_custom_image');
     setupImageUpload('scene2-upload', 'scene2-img', 'scene2-placeholder', 'scene2_custom_image');
     setupImageUpload('scene3-upload', 'scene3-img', 'scene3-placeholder', 'scene3_custom_image');
+
+    // Hamburger Menu Logic
+    const hamburger = document.querySelector('.hamburger');
+    const navLinksList = document.querySelector('.nav-links');
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+
+    if (hamburger && navLinksList) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinksList.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinksItems.forEach(item => {
+            item.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinksList.classList.remove('active');
+            });
+        });
+    }
 });
